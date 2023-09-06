@@ -15,6 +15,13 @@ import {
   Stack,
   FormControlLabel,
   IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import "./App.css";
@@ -36,21 +43,16 @@ function App() {
     radioValue: ''
   });
 
-  // const [selectedPriority, setSelectedPriority] = useState("Urgent"); //initialized with a value
-
 
   const handleDialog = () => {
     setOpen(!open); // toggle the state of the dialog
   };
 
-  // const handlePriorityChange = (e) => {
-  // setSelectedPriority(e.target.value); // handle changes in the selected priority value 
-  // };
 
   const handleInputChange = (event) => {
     const { name, value, type, checked } = event.target;
 
-
+    
     // handle radios / textfields
     if (type === 'radio') {
       setTaskData((prevData) => ({
@@ -157,8 +159,6 @@ function App() {
                     display: "inline-block",
                     
                   }}
-                  // value = {selectedPriority}
-                  // onChange = {handlePriorityChange}
                 >
                   <FormControlLabel
                     value="Urgent"
@@ -199,8 +199,29 @@ function App() {
         </Dialog>
       </Box>
 
-      <Box>
-      </Box>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Title</TableCell>
+              <TableCell>Description</TableCell>
+              <TableCell>Priority</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+          {tasks.map((task, index) => {
+            const { title, description, radioValue } = task;
+              return (
+              <TableRow key={index}>
+                <TableCell>{title}</TableCell>
+                <TableCell>{description}</TableCell>
+                <TableCell>{radioValue}</TableCell>
+              </TableRow>
+              )
+          })}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </>
   );
 }
