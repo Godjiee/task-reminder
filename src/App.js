@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Typography,
   Button,
@@ -31,6 +31,9 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
 function App() {
+
+  
+
 
   // useState hooks
   const [open, setOpen] = useState(false); //dialog state
@@ -75,13 +78,21 @@ function App() {
     setOpen(!open);
   }
 
+  useEffect(() => {
+    setTaskData({
+      title: '',
+      description: '',
+      radioValue: ''
+    });
+  }, [tasks]);
+
 
   return (
     <>
       <Typography
         variant='h1'
         sx={{
-          margin: '5rem',
+          margin: '2rem',
           fontWeight: '500',
           fontSize: '5em',
           display: 'flex',
@@ -91,7 +102,8 @@ function App() {
         Clean Mind
       </Typography>
       <Typography
-        variant='h1'
+        variant='h2'
+        color='primary'
         sx={{
           fontWeight: '400',
           fontSize: '3em',
@@ -221,7 +233,13 @@ function App() {
                 <TableRow key={index}>
                   <TableCell>{title}</TableCell>
                   <TableCell sx={{whiteSpace: 'normal'}}>{description}</TableCell>
-                  <TableCell>{radioValue}</TableCell>
+                  <TableCell 
+                    sx={{ 
+                      color: task.radioValue === 'Urgent' ? 'red' : '#f1bc02'
+                    }}
+                  >
+                    {radioValue}
+                  </TableCell>
                 </TableRow>
                 )
             })}
