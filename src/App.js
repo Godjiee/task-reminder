@@ -37,7 +37,7 @@ function App() {
 
   const [tasks, setTasks] = useState([]); //task state
 
-  const [taskData, setTaskData] = useState({
+  const [taskData, setTaskData] = useState({ //task data state
     title: '',
     description: '',
     radioValue: ''
@@ -79,38 +79,38 @@ function App() {
   return (
     <>
       <Typography
-        variant="h1"
+        variant='h1'
         sx={{
-          margin: "5rem",
-          fontWeight: "500",
-          fontSize: "5em",
-          display: "flex",
-          justifyContent: "center",
+          margin: '5rem',
+          fontWeight: '500',
+          fontSize: '5em',
+          display: 'flex',
+          justifyContent: 'center',
         }}
       >
         Clean Mind
       </Typography>
       <Typography
-        variant="h1"
+        variant='h1'
         sx={{
-          fontWeight: "400",
-          fontSize: "3em",
-          display: "flex",
-          justifyContent: "center",
+          fontWeight: '400',
+          fontSize: '3em',
+          display: 'flex',
+          justifyContent: 'center',
         }}
       >
         Don't overthink, stay productive
       </Typography>
       <Box
         sx={{
-          margin: "3rem",
-          textAlign: "center",
+          margin: '3rem',
+          textAlign: 'center',
         }}
       >
         <Button 
           onClick={handleDialog} 
-          variant="outlined" 
-          size="large"
+          variant='outlined' 
+          size='large'
         >
           add a new task
         </Button>
@@ -124,7 +124,7 @@ function App() {
             <IconButton
               onClick={handleDialog}
               sx={{
-                float: "right",
+                float: 'right',
               }}
             >
               <CloseIcon></CloseIcon>
@@ -133,22 +133,22 @@ function App() {
           <DialogContent>
             <Stack spacing={2} margin={2}>
               <TextField
-                variant="outlined"
-                label="Title"
-                placeholder="Be specific and concise"
-                type="text"
-                name="title"
+                variant='outlined'
+                label='Title'
+                placeholder='Be specific and concise'
+                type='text'
+                name='title'
                 value={taskData.title}
                 onChange={handleInputChange}
               />
               <TextField
-                variant="outlined"
-                label="Description"
-                placeholder="Describe in further detail your task"
+                variant='outlined'
+                label='Description'
+                placeholder='Describe in further detail your task'
                 multiline
                 rows={5}
                 rowsmax={10}
-                name="description"
+                name='description'
                 value={taskData.description}
                 onChange={handleInputChange}
               />
@@ -156,21 +156,21 @@ function App() {
                 <FormLabel>Prio</FormLabel>
                 <RadioGroup
                   sx={{
-                    display: "inline-block",
+                    display: 'inline-block',
                     
                   }}
                 >
                   <FormControlLabel
-                    value="Urgent"
+                    value='Urgent'
                     control={<Radio />}
-                    label="Urgent"
+                    label='Urgent'
                     checked={taskData.radioValue === 'Urgent'}
                     onChange={handleInputChange}
                   />
                   <FormControlLabel
-                    value="Trivial"
+                    value='Trivial'
                     control={<Radio />}
-                    label="Trivial"
+                    label='Trivial'
                     checked={taskData.radioValue === 'Trivial'}
                     onChange={handleInputChange}
                   />
@@ -180,8 +180,8 @@ function App() {
           </DialogContent>
           <DialogActions>
             <Button
-              variant="contained"
-              color="primary"
+              variant='contained'
+              color='primary'
               onClick={() => {
                 handleTaskSubmit();
             }}
@@ -190,8 +190,8 @@ function App() {
             </Button>
             <Button
               onClick={handleDialog}
-              variant="contained"
-              color="error"
+              variant='contained'
+              color='error'
             >
               Close
             </Button>
@@ -199,8 +199,14 @@ function App() {
         </Dialog>
       </Box>
 
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <TableContainer 
+        component={Paper}
+        sx={{
+          margin: '0 auto',
+          maxWidth: '80%',
+        }}
+      >
+        <Table>
           <TableHead>
             <TableRow>
               <TableCell>Title</TableCell>
@@ -209,16 +215,16 @@ function App() {
             </TableRow>
           </TableHead>
           <TableBody>
-          {tasks.map((task, index) => {
-            const { title, description, radioValue } = task;
-              return (
-              <TableRow key={index}>
-                <TableCell>{title}</TableCell>
-                <TableCell>{description}</TableCell>
-                <TableCell>{radioValue}</TableCell>
-              </TableRow>
-              )
-          })}
+            {tasks.map((task, index) => {
+              const { title, description, radioValue } = task;
+                return (
+                <TableRow key={index}>
+                  <TableCell>{title}</TableCell>
+                  <TableCell sx={{whiteSpace: 'normal'}}>{description}</TableCell>
+                  <TableCell>{radioValue}</TableCell>
+                </TableRow>
+                )
+            })}
           </TableBody>
         </Table>
       </TableContainer>
