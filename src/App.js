@@ -46,7 +46,7 @@ function App() {
     radioValue: ''
   });
 
-
+  // open and close dialog
   const handleDialog = () => {
     setOpen(!open); // toggle the state of the dialog
   };
@@ -55,7 +55,6 @@ function App() {
   const handleInputChange = (event) => {
     const { name, value, type, checked } = event.target;
 
-    
     // handle radios / textfields
     if (type === 'radio') {
       setTaskData((prevData) => ({
@@ -70,14 +69,20 @@ function App() {
     }
   };
 
-  
+  // handle submit
   const handleTaskSubmit = () => {
 
     setTasks([...tasks, taskData]);
     console.log([...tasks, taskData]);
     setOpen(!open);
   }
+  
+  // handle delete task
+  const handleDeleteTask = (indexToDelete) => {
+    setTasks((prevTasks) => prevTasks.filter((_, index) => index !== indexToDelete));
+  };
 
+  //useEffect to clear dialog input information
   useEffect(() => {
     setTaskData({
       title: '',
@@ -215,7 +220,7 @@ function App() {
         component={Paper}
         sx={{
           margin: '0 auto',
-          maxWidth: '80%',
+          maxWidth: '70%',
         }}
       >
         <Table>
@@ -239,6 +244,15 @@ function App() {
                     }}
                   >
                     {radioValue}
+                  </TableCell>
+                  <TableCell>
+                    <IconButton
+                      variant= 'contained'
+                      onClick={() => handleDeleteTask(index)}
+
+                    >
+                      <CloseIcon></CloseIcon>
+                    </IconButton>
                   </TableCell>
                 </TableRow>
                 )
