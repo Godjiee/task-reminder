@@ -21,9 +21,12 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper
+  Paper,
+  Autocomplete
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import "./App.css";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -31,8 +34,6 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
 function App() {
-
-  
 
 
   // useState hooks
@@ -43,12 +44,21 @@ function App() {
   const [taskData, setTaskData] = useState({ //task data state
     title: '',
     description: '',
-    radioValue: ''
+    radioValue: '',
+    isCompleted: false,
   });
 
   // open and close dialog
   const handleDialog = () => {
     setOpen(!open); // toggle the state of the dialog
+  };
+
+  const updateObjectValue = (index) => {
+    // copy array
+    const updatedData = [...tasks];
+    updatedData[index].isCompleted == false ? updatedData[index].isCompleted = true : updatedData[index].isCompleted = false;
+    // update the state
+    setTasks(updatedData);
   };
 
 
@@ -73,7 +83,7 @@ function App() {
   const handleTaskSubmit = () => {
 
     setTasks([...tasks, taskData]);
-    console.log([...tasks, taskData]);
+    console.log(taskData);
     setOpen(!open);
   }
   
@@ -82,14 +92,19 @@ function App() {
     setTasks((prevTasks) => prevTasks.filter((_, index) => index !== indexToDelete));
   };
 
+
   //useEffect to clear dialog input information
   useEffect(() => {
+    console.log('teste');
     setTaskData({
       title: '',
       description: '',
-      radioValue: ''
+      radioValue: '',
+      isCompleted: false
     });
   }, [tasks]);
+  
+
 
 
   return (
@@ -215,7 +230,7 @@ function App() {
           </DialogActions>
         </Dialog>
       </Box>
-
+        
       <TableContainer 
         component={Paper}
         sx={{
@@ -233,7 +248,7 @@ function App() {
           </TableHead>
           <TableBody>
             {tasks.map((task, index) => {
-              const { title, description, radioValue } = task;
+              const { title, description, radioValue, isCompleted } = task;
                 return (
                 <TableRow key={index}>
                   <TableCell>{title}</TableCell>
@@ -245,15 +260,29 @@ function App() {
                   >
                     {radioValue}
                   </TableCell>
+                  <TableCell
+                    sx={{ 
+                      color: task.isCompleted == false ? 'blue' : 'green'
+                    }}
+                  >{isCompleted == false ? 'To do' : 'Completed'}</TableCell>
                   <TableCell>
                     <IconButton
                       variant= 'contained'
                       onClick={() => handleDeleteTask(index)}
-
                     >
-                      <CloseIcon></CloseIcon>
+                      <DeleteOutlineOutlinedIcon></DeleteOutlineOutlinedIcon>
                     </IconButton>
                   </TableCell>
+                  <TableCell>
+                    <IconButton
+                      variant= 'contained'
+                      onClick={() => updateObjectValue(index)}
+                    >
+                      {isCompleted == false ? <CheckOutlinedIcon></CheckOutlinedIcon> : <CloseIcon></CloseIcon>}
+                      
+                    </IconButton>
+                  </TableCell>
+
                 </TableRow>
                 )
             })}
