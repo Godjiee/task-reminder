@@ -1,4 +1,4 @@
-CLEAN MIND TODO LIST
+CLEAN MIND TODO LIST<br>
 As my first project using React, I set out to create something simple that would not only allow me to dive into React's core functionalities but also enable me to explore Material UI documentation.
 
 Features:
